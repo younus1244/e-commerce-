@@ -14,55 +14,76 @@
             border: 1px solid #ccc;
             padding: 10px;
             margin: 10px;
+            width: 200px;
             text-align: center;
         }
 
-        .cart {
-            background-color: #f2f2f2;
-            padding: 10px;
-            margin: 10px;
+        .wishlist {
+            color: red;
+            cursor: pointer;
+        }
+
+        .coupon-input {
+            margin-top: 10px;
         }
     </style>
 </head>
 
 <body>
-    <h1>Products</h1>
+    <h1>E-commerce Store</h1>
+
     <div class="product" id="product1">
         <h2>Product 1</h2>
-        <p>Price: $10</p>
-        <button onclick="addToCart('Product 1', 10)">Add to Cart</button>
+        <p>$50</p>
+        <div class="wishlist" onclick="toggleWishlist('product1')">Add to Wishlist</div>
     </div>
 
     <div class="product" id="product2">
         <h2>Product 2</h2>
-        <p>Price: $15</p>
-        <button onclick="addToCart('Product 2', 15)">Add to Cart</button>
+        <p>$75</p>
+        <div class="wishlist" onclick="toggleWishlist('product2')">Add to Wishlist</div>
     </div>
 
-    <h1>Shopping Cart</h1>
-    <div class="cart" id="cart">
-        Cart is empty
+    <div class="wishlist-items">
+        <h2>Wishlist</h2>
+        <ul id="wishlist"></ul>
+    </div>
+
+    <div class="coupon-input">
+        <label for="coupon">Enter Coupon Code:</label>
+        <input type="text" id="coupon">
+        <button onclick="applyCoupon()">Apply Coupon</button>
     </div>
 
     <script>
-        function addToCart(productName, price) {
-            var cartDiv = document.getElementById('cart');
-            var cartContent = cartDiv.innerHTML;
+        const wishlistItems = [];
 
-            // Extracting the current total from the cart content
-            var regex = /Total: \$([0-9]+)/;
-            var match = regex.exec(cartContent);
-            var total = match ? parseInt(match[1]) : 0;
+        function toggleWishlist(productId) {
+            const productIndex = wishlistItems.indexOf(productId);
+            if (productIndex === -1) {
+                wishlistItems.push(productId);
+            } else {
+                wishlistItems.splice(productIndex, 1);
+            }
+            displayWishlist();
+        }
 
-            // Updating the total and cart content
-            total += price;
-            cartContent = cartContent.replace(/Cart is empty/, '');
-            cartContent += `<p>${productName} - $${price}</p>`;
-            cartContent += `Total: $${total}`;
-            cartDiv.innerHTML = cartContent;
+        function displayWishlist() {
+            const wishlistElement = document.getElementById('wishlist');
+            wishlistElement.innerHTML = '';
+            wishlistItems.forEach(productId => {
+                const li = document.createElement('li');
+                li.textContent = `Product ${productId.slice(-1)}`;
+                wishlistElement.appendChild(li);
+            });
+        }
+
+        function applyCoupon() {
+            const couponCode = document.getElementById('coupon').value;
+            // Logic to apply coupon code (not implemented in this example)
+            alert(`Coupon "${couponCode}" applied!`);
         }
     </script>
 </body>
 
-                         </html>
-    
+</html>
