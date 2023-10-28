@@ -4,22 +4,65 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-Commerce Store</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>E-commerce Template</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        .product {
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin: 10px;
+            text-align: center;
+        }
+
+        .cart {
+            background-color: #f2f2f2;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
 </head>
 
 <body>
-    <div class="container">
-        <h1>E-Commerce Store</h1>
-        <div id="product-list"></div>
-        <div id="cart">
-            <h2>Shopping Cart</h2>
-            <ul id="cart-items"></ul>
-            <p>Total: $<span id="cart-total">0.00</span></p>
-            <button onclick="checkout()">Checkout</button>
-        </div>
+    <h1>Products</h1>
+    <div class="product" id="product1">
+        <h2>Product 1</h2>
+        <p>Price: $10</p>
+        <button onclick="addToCart('Product 1', 10)">Add to Cart</button>
     </div>
-    <script src="script.js"></script>
+
+    <div class="product" id="product2">
+        <h2>Product 2</h2>
+        <p>Price: $15</p>
+        <button onclick="addToCart('Product 2', 15)">Add to Cart</button>
+    </div>
+
+    <h1>Shopping Cart</h1>
+    <div class="cart" id="cart">
+        Cart is empty
+    </div>
+
+    <script>
+        function addToCart(productName, price) {
+            var cartDiv = document.getElementById('cart');
+            var cartContent = cartDiv.innerHTML;
+
+            // Extracting the current total from the cart content
+            var regex = /Total: \$([0-9]+)/;
+            var match = regex.exec(cartContent);
+            var total = match ? parseInt(match[1]) : 0;
+
+            // Updating the total and cart content
+            total += price;
+            cartContent = cartContent.replace(/Cart is empty/, '');
+            cartContent += `<p>${productName} - $${price}</p>`;
+            cartContent += `Total: $${total}`;
+            cartDiv.innerHTML = cartContent;
+        }
+    </script>
 </body>
 
-</html>
+                         </html>
+    
